@@ -1,33 +1,9 @@
+/*  SPDX-License-Identifier: MIT */
+/*
+ *  Copyright (c) 2014 by Intel Corp
+ */
+
 /*------------------------------------------------------------------
- * test_stpcpy_s
- *
- * September 2014, D Wheeler
- *
- * Copyright (c) 2014 by Intel Corp
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *------------------------------------------------------------------
- *------------------------------------------------------------------
  *   TEST COVERAGE NOTES
  *
  *   The following notes describe the purpose of the test cases in
@@ -80,7 +56,7 @@ static char   str2[LEN];
 
 int test_stpcpy_s (void)
 {
-	char *ret;
+    char *ret;
     errno_t rc;
 #ifdef SAFE_LIB_STR_NULL_SLACK
     uint32_t i;
@@ -100,7 +76,7 @@ int test_stpcpy_s (void)
     }
 
     if (ret != NULL) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -108,30 +84,30 @@ int test_stpcpy_s (void)
 /* 2 Test for zero length destination                 */
     printf("Test #%d:\n", ++testno);
 
-	ret = stpcpy_s(str1, 0, str2, &rc);
-	if (rc != ESZEROL) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
-	if (ret != NULL) {
-		printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    ret = stpcpy_s(str1, 0, str2, &rc);
+    if (rc != ESZEROL) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
+    if (ret != NULL) {
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 
 /*--------------------------------------------------*/
 /* 3 Test for too large destination size              */
     printf("Test #%d:\n", ++testno);
 
-	ret = stpcpy_s(str1, (RSIZE_MAX_STR+1), str2, &rc);
-	if (rc != ESLEMAX) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
-	if (ret != NULL) {
-		printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    ret = stpcpy_s(str1, (RSIZE_MAX_STR+1), str2, &rc);
+    if (rc != ESLEMAX) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
+    if (ret != NULL) {
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 /*--------------------------------------------------*/
 /* 4 Test for NULL source check                       */
@@ -146,7 +122,7 @@ int test_stpcpy_s (void)
     }
 
     if (ret != NULL) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -179,7 +155,7 @@ int test_stpcpy_s (void)
 
 
     if (ret != NULL) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -188,18 +164,18 @@ int test_stpcpy_s (void)
 /* 6 Test copy the same string onto itself            */
     printf("Test #%d:\n", ++testno);
 
-	strcpy(str1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    strcpy(str1, "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-	ret = stpcpy_s(str1, LEN, str1, &rc);
-	if (rc != EOK) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    ret = stpcpy_s(str1, LEN, str1, &rc);
+    if (rc != EOK) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
-	if (ret == NULL || ret[0] != '\0' || ret != str1+strnlen_s(str1, LEN) ) {
-		printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    if (ret == NULL || ret[0] != '\0' || ret != str1+strnlen_s(str1, LEN) ) {
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 /*--------------------------------------------------*/
 /* 7  Test for string overlap, destination < src, and
@@ -207,30 +183,30 @@ int test_stpcpy_s (void)
  * change the src string                            */
     printf("Test #%d:\n", ++testno);
 
-	strcpy(&str1[0], "keep it simple");
+    strcpy(&str1[0], "keep it simple");
 
-	ret = stpcpy_s(&str1[0], LEN, &str1[5], &rc);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
-	if (ret != NULL) {
-		printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    ret = stpcpy_s(&str1[0], LEN, &str1[5], &rc);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
+    if (ret != NULL) {
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 #ifdef SAFE_LIB_STR_NULL_SLACK
-	for (i=0; i<LEN; i++) {
-		if (str1[i] != '\0') {
-			printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-		}
-	}
+    for (i=0; i<LEN; i++) {
+        if (str1[i] != '\0') {
+            printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+        }
+    }
 #else
-	if (str1[0] != '\0') {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    if (str1[0] != '\0') {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 #endif
 
 
@@ -240,30 +216,30 @@ int test_stpcpy_s (void)
  * result in an infinite copy operation              */
     printf("Test #%d:\n", ++testno);
 
-	strcpy(&str1[0], "keep it simple");
+    strcpy(&str1[0], "keep it simple");
 
-	ret = stpcpy_s(&str1[5], LEN, &str1[0], &rc);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
-	if (ret != NULL) {
-		printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    ret = stpcpy_s(&str1[5], LEN, &str1[0], &rc);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
+    if (ret != NULL) {
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 #ifdef SAFE_LIB_STR_NULL_SLACK
-	for (i=0; i<LEN; i++) {
-		if (str1[i] != '\0') {
-			printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-		}
-	}
+    for (i=0; i<LEN; i++) {
+        if (str1[i] != '\0') {
+            printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+        }
+    }
 #else
-	if (str1[5] != '\0') {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    if (str1[5] != '\0') {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 #endif
 
 
@@ -287,7 +263,7 @@ int test_stpcpy_s (void)
                      __FUNCTION__, __LINE__,  rc );
     }
     if (ret == NULL || ret[0] != '\0' || ret != str1) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -319,7 +295,7 @@ int test_stpcpy_s (void)
                      __FUNCTION__, __LINE__,  rc );
     }
     if (ret == NULL || ret[0] != '\0' || ret != str2) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -349,7 +325,7 @@ int test_stpcpy_s (void)
     }
 
     if (ret == NULL || ret[0] != '\0' || ret != str1+strnlen_s(str1, LEN) ) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -367,7 +343,7 @@ int test_stpcpy_s (void)
     }
 
     if (ret == NULL || ret[0] != '\0' || ret != str1+strnlen_s(str1, LEN) ) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -391,7 +367,7 @@ int test_stpcpy_s (void)
                      __FUNCTION__, __LINE__,  rc );
     }
     if (ret != NULL) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -413,7 +389,7 @@ int test_stpcpy_s (void)
                      __FUNCTION__, __LINE__,  rc );
     }
     if (ret != NULL) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -442,7 +418,7 @@ int test_stpcpy_s (void)
                      __FUNCTION__, __LINE__,  str1, rc );
     }
     if (ret == NULL || ret[0] != '\0' || ret != str1+strnlen_s(str1, LEN) ) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 
@@ -459,7 +435,7 @@ int test_stpcpy_s (void)
                      __FUNCTION__, __LINE__,  rc );
     }
     if (ret == NULL || ret[0] != '\0' || ret != str2+strnlen_s(str2, LEN) ) {
-    	printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
+        printf("Returned pointer incorrect: %s %u   Error rc=%u \n",
                      __FUNCTION__, __LINE__,  rc );
     }
 

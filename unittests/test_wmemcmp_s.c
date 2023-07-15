@@ -1,33 +1,8 @@
+/*  SPDX-License-Identifier: MIT */
+/*
+ *  Copyright (c) 2014 by Intel Corp
+ */
 /*------------------------------------------------------------------
- * test_wcsncat_s.c
- *
- * August 2014, D Wheeler
- *
- * Copyright (c) 2014 by Intel Corp
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *------------------------------------------------------------------
- *------------------------------------------------------------------
  *   TEST COVERAGE NOTES
  *
  *   The following notes describe the purpose of the test cases in
@@ -251,102 +226,102 @@ int test_wmemcmp_s()
 /*--------------------------------------------------*/
 /* 12: Test short string - s1 < s2 at index 10  */
 
-	printf("Test #%d:\n", ++testno);
-	for (i=0; i<LEN; i++) { mem1[i] = i; }
-	for (i=0; i<LEN; i++) { mem2[i] = i; }
+    printf("Test #%d:\n", ++testno);
+    for (i=0; i<LEN; i++) { mem1[i] = i; }
+    for (i=0; i<LEN; i++) { mem2[i] = i; }
 
-	for (i=10; i<LEN-10; i++) { mem2[i] = 5; }
+    for (i=10; i<LEN-10; i++) { mem2[i] = 5; }
 
-	rc = wmemcmp_s(mem2, LEN, mem1, LEN, &ind);
-	if (rc != EOK) {
-		printf("%s %u  Ind=%d  Error rc=%u \n",
-					 __FUNCTION__, __LINE__, ind, rc );
-	}
+    rc = wmemcmp_s(mem2, LEN, mem1, LEN, &ind);
+    if (rc != EOK) {
+        printf("%s %u  Ind=%d  Error rc=%u \n",
+                     __FUNCTION__, __LINE__, ind, rc );
+    }
 
-	if (ind >= 0) {
-		printf("%s %u  Ind=%d  rc=%u \n",
-					 __FUNCTION__, __LINE__,  ind, rc );
-	}
+    if (ind >= 0) {
+        printf("%s %u  Ind=%d  rc=%u \n",
+                     __FUNCTION__, __LINE__,  ind, rc );
+    }
 
 /*--------------------------------------------------*/
 /* 13: Test long string - single char greater than difference at index 1  */
 
-	printf("Test #%d:\n", ++testno);
-	for (i=0; i<LEN; i++) { mem1[i] = i; }
-	for (i=0; i<LEN; i++) { mem2[i] = i; }
+    printf("Test #%d:\n", ++testno);
+    for (i=0; i<LEN; i++) { mem1[i] = i; }
+    for (i=0; i<LEN; i++) { mem2[i] = i; }
 
-	mem2[1] += 1;
+    mem2[1] += 1;
 
-	rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
-	if (rc != EOK) {
-		printf("%s %u  Ind=%d  Error rc=%u \n",
-					 __FUNCTION__, __LINE__, ind, rc );
-	}
+    rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
+    if (rc != EOK) {
+        printf("%s %u  Ind=%d  Error rc=%u \n",
+                     __FUNCTION__, __LINE__, ind, rc );
+    }
 
-	if (ind >= 0) {
-		printf("%s %u  Ind=%d  rc=%u \n",
-					 __FUNCTION__, __LINE__,  ind, rc );
-	}
+    if (ind >= 0) {
+        printf("%s %u  Ind=%d  rc=%u \n",
+                     __FUNCTION__, __LINE__,  ind, rc );
+    }
 
 /*--------------------------------------------------*/
 /* 14: Test long string - single char less than difference at index 1  */
 
-	printf("Test #%d:\n", ++testno);
-	for (i=0; i<LEN; i++) { mem1[i] = i; }
-	for (i=0; i<LEN; i++) { mem2[i] = i; }
+    printf("Test #%d:\n", ++testno);
+    for (i=0; i<LEN; i++) { mem1[i] = i; }
+    for (i=0; i<LEN; i++) { mem2[i] = i; }
 
-	mem2[1] -= 1;
+    mem2[1] -= 1;
 
-	rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
-	if (rc != EOK) {
-		printf("%s %u  Ind=%d  Error rc=%u \n",
-					 __FUNCTION__, __LINE__, ind, rc );
-	}
+    rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
+    if (rc != EOK) {
+        printf("%s %u  Ind=%d  Error rc=%u \n",
+                     __FUNCTION__, __LINE__, ind, rc );
+    }
 
-	if (ind <= 0) {
-		printf("%s %u  Ind=%d  rc=%u \n",
-					 __FUNCTION__, __LINE__,  ind, rc );
-	}
+    if (ind <= 0) {
+        printf("%s %u  Ind=%d  rc=%u \n",
+                     __FUNCTION__, __LINE__,  ind, rc );
+    }
 
 /*--------------------------------------------------*/
 /* 15: Test long string - single char greater than difference at end of string  */
 
-	printf("Test #%d:\n", ++testno);
-	for (i=0; i<LEN; i++) { mem1[i] = i; }
-	for (i=0; i<LEN; i++) { mem2[i] = i; }
+    printf("Test #%d:\n", ++testno);
+    for (i=0; i<LEN; i++) { mem1[i] = i; }
+    for (i=0; i<LEN; i++) { mem2[i] = i; }
 
-	mem2[LEN-1] += 1;
+    mem2[LEN-1] += 1;
 
-	rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
-	if (rc != EOK) {
-		printf("%s %u  Ind=%d  Error rc=%u \n",
-					 __FUNCTION__, __LINE__, ind, rc );
-	}
+    rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
+    if (rc != EOK) {
+        printf("%s %u  Ind=%d  Error rc=%u \n",
+                     __FUNCTION__, __LINE__, ind, rc );
+    }
 
-	if (ind >= 0) {
-		printf("%s %u  Ind=%d  rc=%u \n",
-					 __FUNCTION__, __LINE__,  ind, rc );
-	}
+    if (ind >= 0) {
+        printf("%s %u  Ind=%d  rc=%u \n",
+                     __FUNCTION__, __LINE__,  ind, rc );
+    }
 
 /*--------------------------------------------------*/
 /* 16: Test long string - single char less than difference at end of string  */
 
-	printf("Test #%d:\n", ++testno);
-	for (i=0; i<LEN; i++) { mem1[i] = i; }
-	for (i=0; i<LEN; i++) { mem2[i] = i; }
+    printf("Test #%d:\n", ++testno);
+    for (i=0; i<LEN; i++) { mem1[i] = i; }
+    for (i=0; i<LEN; i++) { mem2[i] = i; }
 
-	mem2[LEN-1] -= 1;
+    mem2[LEN-1] -= 1;
 
-	rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
-	if (rc != EOK) {
-		printf("%s %u  Ind=%d  Error rc=%u \n",
-					 __FUNCTION__, __LINE__, ind, rc );
-	}
+    rc = wmemcmp_s(mem1, LEN, mem2, LEN, &ind);
+    if (rc != EOK) {
+        printf("%s %u  Ind=%d  Error rc=%u \n",
+                     __FUNCTION__, __LINE__, ind, rc );
+    }
 
-	if (ind <= 0) {
-		printf("%s %u  Ind=%d  rc=%u \n",
-					 __FUNCTION__, __LINE__,  ind, rc );
-	}
+    if (ind <= 0) {
+        printf("%s %u  Ind=%d  rc=%u \n",
+                     __FUNCTION__, __LINE__,  ind, rc );
+    }
 
 /*--------------------------------------------------*/
 /*--------------------------------------------------*/

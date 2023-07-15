@@ -1,33 +1,9 @@
+/*  SPDX-License-Identifier: MIT */
+/*
+ *  Copyright (c) 2014 by Intel Corp
+ */
+
 /*------------------------------------------------------------------
- * test_wcsncat_s.c
- *
- * August 2014, D Wheeler
- *
- * Copyright (c) 2014 by Intel Corp
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *------------------------------------------------------------------
- *------------------------------------------------------------------
  *   TEST COVERAGE NOTES
  *
  *   The following notes describe the purpose of the test cases in
@@ -117,13 +93,13 @@ int test_wcsncat_s (void)
 
 /*--------------------------------------------------*/
 /* 3  Test  Exceed Maximum possible size of source     */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	rc = wcsncat_s(str1, LEN, str2, (RSIZE_MAX_STR+1));
-	if (rc != ESLEMAX) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wcsncat_s(str1, LEN, str2, (RSIZE_MAX_STR+1));
+    if (rc != ESLEMAX) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 /*--------------------------------------------------*/
 /* 4   Test zero maximum length of destination */
     printf("Test #%d:\n", ++testno);
@@ -182,21 +158,21 @@ int test_wcsncat_s (void)
 
 /*--------------------------------------------------*/
 /* 8   Test overlap of destination buffer into source after copying begins */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wcscpy_s(str1, LEN, L"keep it simple");
-	wcscpy_s(&str1[20], LEN, L"aaaaaaaaaaaaaaaaaaaa");
+    wcscpy_s(str1, LEN, L"keep it simple");
+    wcscpy_s(&str1[20], LEN, L"aaaaaaaaaaaaaaaaaaaa");
 
-	rc = wcsncat_s(str1, 30, &str1[20], LEN);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wcsncat_s(str1, 30, &str1[20], LEN);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 
-	if (str1[0] != '\0') {
-		printf("%s %u  Expected null  \n",
-					 __FUNCTION__, __LINE__);
-	}
+    if (str1[0] != '\0') {
+        printf("%s %u  Expected null  \n",
+                     __FUNCTION__, __LINE__);
+    }
 
 /*--------------------------------------------------*/
 /* 9   Test proper concatenated of at most slen characters */
@@ -228,25 +204,25 @@ int test_wcsncat_s (void)
 
 /*--------------------------------------------------*/
 /* 10   Test Verify proper size of concatenated strings & value of concatenated string */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wcscpy_s(&str1[0], LEN, L"aaaaaaaaaa");
-	wcscpy_s(&str2[0], LEN, L"keep it simple");
+    wcscpy_s(&str1[0], LEN, L"aaaaaaaaaa");
+    wcscpy_s(&str2[0], LEN, L"keep it simple");
 
-	len1 = wcsnlen_s(str1, LEN);
-	len2 = wcsnlen_s(str2, LEN);
+    len1 = wcsnlen_s(str1, LEN);
+    len2 = wcsnlen_s(str2, LEN);
 
-	rc = wcsncat_s(str1, 50, str2, LEN);
-	if (rc != EOK) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wcsncat_s(str1, 50, str2, LEN);
+    if (rc != EOK) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 
-	len3 = wcsnlen_s(str1, LEN);
-	if (len3 != (len1+len2)) {
-		printf("%s %u lengths wrong: %u  %u  %u \n",
-					 __FUNCTION__, __LINE__, len1, len2, len3);
-	}
+    len3 = wcsnlen_s(str1, LEN);
+    if (len3 != (len1+len2)) {
+        printf("%s %u lengths wrong: %u  %u  %u \n",
+                     __FUNCTION__, __LINE__, len1, len2, len3);
+    }
 
     rc = memcmp_s(str1, LEN, L"aaaaaaaaaakeep it simple", (len3+1)*sizeof(wchar_t), &ind );
     if (ind != 0) {
@@ -387,16 +363,16 @@ int test_wcsncat_s (void)
 
 /*--------------------------------------------------*/
 /* 18   Test concat two strings  - not enough space in dest */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wcscpy_s(str1, LEN, L"1234");
-	wcscpy_s(str2, LEN, L"keep it simple");
+    wcscpy_s(str1, LEN, L"1234");
+    wcscpy_s(str2, LEN, L"keep it simple");
 
-	rc = wcsncat_s(str2, 16, str1, LEN);
-	if (rc != ESNOSPC) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wcsncat_s(str2, 16, str1, LEN);
+    if (rc != ESNOSPC) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 
     if (str2[0] != '\0') {
         printf("%s %u  Expected null  \n",
@@ -405,20 +381,20 @@ int test_wcsncat_s (void)
 
 /*--------------------------------------------------*/
 /* 19   Test overlapping destination string into the beginning of the src */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wcscpy_s(str1, LEN, L"12345678901234567890");
+    wcscpy_s(str1, LEN, L"12345678901234567890");
 
-	rc = wcsncat_s(&str1[7], LEN, str1, LEN);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wcsncat_s(&str1[7], LEN, str1, LEN);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 
-	if (str1[7] != '\0') {
-		printf("%s %u  Expected null  \n",
-					 __FUNCTION__, __LINE__);
-	}
+    if (str1[7] != '\0') {
+        printf("%s %u  Expected null  \n",
+                     __FUNCTION__, __LINE__);
+    }
 
 /*--------------------------------------------------*/
 /* 20   Test concat two strings  - just enough space in the destination */
@@ -460,16 +436,16 @@ int test_wcsncat_s (void)
 
 /*--------------------------------------------------*/
 /* 22   Test normal string concat - no enough room for NULL */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wcscpy_s(str2, LEN, L"1234");
-	wcscpy_s(str1, LEN, L"56789");
+    wcscpy_s(str2, LEN, L"1234");
+    wcscpy_s(str1, LEN, L"56789");
 
-	rc = wcsncat_s(str2, 9, str1, LEN);
-	if (rc != ESNOSPC) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wcsncat_s(str2, 9, str1, LEN);
+    if (rc != ESNOSPC) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 
     if (str2[0] != L'\0') {
         printf("%s %u  Expected null  \n",

@@ -1,33 +1,9 @@
+/*  SPDX-License-Identifier: MIT */
+/*
+ *  Copyright (c) 2014-2022 by Intel Corp
+ */
+
 /*------------------------------------------------------------------
- * test_wwmemcpy_s
- *
- * September 2014, D Wheeler
- *
- * Copyright (c) 2014 by Intel Corp
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *------------------------------------------------------------------
- *------------------------------------------------------------------
  *   TEST COVERAGE NOTES
  *
  *   The following notes describe the purpose of the test cases in
@@ -148,13 +124,13 @@ int test_wmemcpy_s (void)
 
 /*--------------------------------------------------*/
 /* 8 Test for source overlaps into dest buffer */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	rc = wmemcpy_s(&mem1[25], LEN, mem1, 26);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc);
-	}
+    rc = wmemcpy_s(&mem1[25], LEN - 25, mem1, 26);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc);
+    }
 
 
 /*--------------------------------------------------*/
@@ -171,16 +147,16 @@ int test_wmemcpy_s (void)
                      __FUNCTION__, __LINE__,  rc);
     } else {
 
-    	if ( mem1[0] != 40 && mem1[10] != 40) {
+        if ( mem1[0] != 40 && mem1[10] != 40) {
             printf("%d - %d m1[0]=%d  m1[10]=%d should be 40  \n",
                  __LINE__, i, mem1[0], mem1[10]);
-    	}
-		for (i=1; i<10; i++) {
-			if (mem1[i] != 44) {
-				printf("%d - %d m1=%d  should be 44  \n",
-					 __LINE__, i, mem1[i]);
-			}
-		}
+        }
+        for (i=1; i<10; i++) {
+            if (mem1[i] != 44) {
+                printf("%d - %d m1=%d  should be 44  \n",
+                     __LINE__, i, mem1[i]);
+            }
+        }
     }
 
 /*--------------------------------------------------*/
@@ -284,18 +260,18 @@ int test_wmemcpy_s (void)
                      __FUNCTION__, __LINE__, rc);
     } else {
 
-		/* verify mem1 was zeroed */
-		for (i=0; i<len; i++) {
-			if (mem1[i] != 0) {
-				printf("%d - %d m1=%d  m2=%d  \n",
-					 __LINE__, i, mem1[i], mem2[i]);
-			}
-		}
+        /* verify mem1 was zeroed */
+        for (i=0; i<len; i++) {
+            if (mem1[i] != 0) {
+                printf("%d - %d m1=%d  m2=%d  \n",
+                     __LINE__, i, mem1[i], mem2[i]);
+            }
+        }
 
-		if (mem1[len] == 0) {
-				printf("%d - %d m1=%d  m2=%d  \n",
-					 __LINE__, i, mem1[i], mem2[i]);
-		}
+        if (mem1[len] == 0) {
+                printf("%d - %d m1=%d  m2=%d  \n",
+                     __LINE__, i, mem1[i], mem2[i]);
+        }
 
     }
 
@@ -356,12 +332,12 @@ int test_wmemcpy_s (void)
                      __FUNCTION__, __LINE__,  rc);
     } else {
 
-		for (i=10; i<len+10; i++) {
-			if (mem1[i] != 0) {
-				printf("%d - %d m1=%d  m2=%d  \n",
-					 __LINE__, i, mem1[i], mem2[i]);
-			}
-		}
+        for (i=10; i<len+10; i++) {
+            if (mem1[i] != 0) {
+                printf("%d - %d m1=%d  m2=%d  \n",
+                     __LINE__, i, mem1[i], mem2[i]);
+            }
+        }
 
     }
 

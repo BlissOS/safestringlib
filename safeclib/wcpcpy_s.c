@@ -1,32 +1,6 @@
-/*------------------------------------------------------------------
- * wcpcpy_s.c
- *
- * August 2014, D Wheeler
- *
- * Copyright (c) 2014 by Intel Corp
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *------------------------------------------------------------------
+/*  SPDX-License-Identifier: MIT */
+/*
+ *  Copyright (c) 2014 by Intel Corp
  */
 
 #include "safeclib_private.h"
@@ -70,13 +44,13 @@
  * OUTPUT PARAMETERS
  *    dest      updated
  *    err       updated as follows:
- *    			  EOK        successful operation, the characters in src were
- *               		     copied into dest and the result is null terminated.
- *    			  ESNULLP    NULL pointer
- *    			  ESZEROL    zero length
- *    			  ESLEMAX    length exceeds max limit
- *    			  ESOVRLP    strings overlap
- *    			  ESNOSPC    not enough space to copy src
+ *                  EOK        successful operation, the characters in src were
+ *                            copied into dest and the result is null terminated.
+ *                  ESNULLP    NULL pointer
+ *                  ESZEROL    zero length
+ *                  ESLEMAX    length exceeds max limit
+ *                  ESOVRLP    strings overlap
+ *                  ESNOSPC    not enough space to copy src
  *
  * RUNTIME CONSTRAINTS
  *    Neither dest nor src shall be a null pointer.
@@ -138,16 +112,16 @@ wcpcpy_s(wchar_t* dest, rsize_t dmax, const wchar_t* src, errno_t *err)
     }
 
     if (dest == src) {
-    	/* move dest to the end of the string */
-    	while (dmax && (*dest != L'\0')) { dmax--; dest++; }
-    	if ( *dest != L'\0' ) {
-    		invoke_safe_str_constraint_handler("wcpcpy_s: no null terminator in dest",
-    		                   NULL, ESLEMAX);
-			*err = RCNEGATE(ESLEMAX);
-			return NULL;
-    	}
-    	*err = RCNEGATE(EOK);
-    	return dest;
+        /* move dest to the end of the string */
+        while (dmax && (*dest != L'\0')) { dmax--; dest++; }
+        if ( *dest != L'\0' ) {
+            invoke_safe_str_constraint_handler("wcpcpy_s: no null terminator in dest",
+                               NULL, ESLEMAX);
+            *err = RCNEGATE(ESLEMAX);
+            return NULL;
+        }
+        *err = RCNEGATE(EOK);
+        return dest;
     }
 
     /* hold base of dest in case src was not copied */
@@ -161,8 +135,8 @@ wcpcpy_s(wchar_t* dest, rsize_t dmax, const wchar_t* src, errno_t *err)
             if (dest == overlap_bumper) {
                 handle_wc_error(orig_dest, orig_dmax, "wcpcpy_s: overlapping objects",
                              ESOVRLP);
-    			*err = RCNEGATE(ESOVRLP);
-    			return NULL;
+                *err = RCNEGATE(ESOVRLP);
+                return NULL;
             }
 
             *dest = *src;
@@ -187,8 +161,8 @@ wcpcpy_s(wchar_t* dest, rsize_t dmax, const wchar_t* src, errno_t *err)
             if (src == overlap_bumper) {
                 handle_wc_error(orig_dest, orig_dmax, "wcpcpy_s: overlapping objects",
                       ESOVRLP);
-    			*err = RCNEGATE(ESOVRLP);
-    			return NULL;
+                *err = RCNEGATE(ESOVRLP);
+                return NULL;
             }
 
             *dest = *src;

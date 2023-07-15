@@ -1,33 +1,9 @@
+/*  SPDX-License-Identifier: MIT */
+/*
+ *  Copyright (c) 2014-2022 by Intel Corp
+ */
+
 /*------------------------------------------------------------------
- * test_wcscpy_s
- *
- * September 2014, D Wheeler
- *
- * Copyright (c) 2014 by Intel Corp
- * All rights reserved.
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without
- * restriction, including without limitation the rights to use,
- * copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the
- * Software is furnished to do so, subject to the following
- * conditions:
- *
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT.  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
- * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
- * OTHER DEALINGS IN THE SOFTWARE.
- *------------------------------------------------------------------
- *------------------------------------------------------------------
  *   TEST COVERAGE NOTES
  *
  *   The following notes describe the purpose of the test cases in
@@ -96,7 +72,7 @@ int test_wcscpy_s (void)
     printf("\nTesting wcscpy_s:\n");
 /*--------------------------------------------------*/
 /* 1  Test for NULL destination check                  */
-printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
     rc = wcscpy_s(NULL, LEN, str2);
     if (rc != ESNULLP) {
@@ -108,25 +84,25 @@ printf("Test #%d:\n", ++testno);
 /* 2  Test for zero length destination                 */
     printf("Test #%d:\n", ++testno);
 
-	rc = wcscpy_s(str1, 0, str2);
-	if (rc != ESZEROL) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    rc = wcscpy_s(str1, 0, str2);
+    if (rc != ESZEROL) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 /*--------------------------------------------------*/
 /* 3  Test for too large destination size              */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	rc = wcscpy_s(str1, (RSIZE_MAX_STR+1), str2);
-	if (rc != ESLEMAX) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    rc = wcscpy_s(str1, (RSIZE_MAX_STR+1), str2);
+    if (rc != ESLEMAX) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 /*--------------------------------------------------*/
 /* 4  Test for NULL source check                       */
-	printf("Test #%d:\n", ++testno);
+   printf("Test #%d:\n", ++testno);
 
    wmemcpy_s(str1, LEN, L"aaaaa", 5);
 
@@ -155,7 +131,7 @@ printf("Test #%d:\n", ++testno);
 /* 5  Test for Src is same as dest, but source too long */
     printf("Test #%d:\n", ++testno);
 
-    wmemcpy_s(str1, LEN, L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 42);
+    wmemcpy_s(str1, LEN, L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 40);
 
     rc = wcscpy_s(str1, 5, str1);
     if (rc != ESLEMAX) {
@@ -167,41 +143,41 @@ printf("Test #%d:\n", ++testno);
 /* 6  Test copy the same string onto itself            */
     printf("Test #%d:\n", ++testno);
 
-    wmemcpy_s(str1, LEN, L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 42);
+    wmemcpy_s(str1, LEN, L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 40);
 
-	rc = wcscpy_s(str1, LEN, str1);
-	if (rc != EOK) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    rc = wcscpy_s(str1, LEN, str1);
+    if (rc != EOK) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 /*--------------------------------------------------*/
 /*--------------------------------------------------*/
 /* 7  Test for string overlap, destination < src, and
  * dest overlaps onto the src string, so a copy would
  * change the src string                            */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wmemcpy_s(str1, LEN, L"keep it simple--keep it simple--keep it simple", 47);
+    wmemcpy_s(str1, LEN, L"keep it simple--keep it simple--keep it simple", 47);
 
-	rc = wcscpy_s(&str1[0], LEN, &str1[5]);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    rc = wcscpy_s(&str1[0], LEN, &str1[5]);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 #ifdef SAFE_LIB_STR_NULL_SLACK
-	for (i=0; i<LEN; i++) {
-		if (str1[i] != L'\0') {
-			printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-		}
-	}
+    for (i=0; i<LEN; i++) {
+        if (str1[i] != L'\0') {
+            printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+        }
+    }
 #else
-	if (str1[0] != L'\0') {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    if (str1[0] != L'\0') {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 #endif
 
 
@@ -209,29 +185,29 @@ printf("Test #%d:\n", ++testno);
 /* 8  Test for string overlap, src < dest, and
  * src overlaps onto the dest string, so a copy would
  * result in an infinite copy operation              */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-	wmemcpy_s(str1, LEN, L"keep it simple--keep it simple--keep it simple", 47);
-	sz = wcsnlen_s(str1, LEN);
+    wmemcpy_s(str1, LEN, L"keep it simple--keep it simple--keep it simple", 47);
+    sz = wcsnlen_s(str1, LEN);
 
-	rc = wcscpy_s(&str1[8], LEN, &str1[0]);
-	if (rc != ESOVRLP) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    rc = wcscpy_s(&str1[8], LEN, &str1[0]);
+    if (rc != ESOVRLP) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
 #ifdef SAFE_LIB_STR_NULL_SLACK
-	for (i=0; i<LEN; i++) {
-		if (str1[i] != L'\0') {
-			printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-		}
-	}
+    for (i=0; i<LEN; i++) {
+        if (str1[i] != L'\0') {
+            printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+        }
+    }
 #else
-	if (str1[8] != L'\0') {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    if (str1[8] != L'\0') {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 #endif
 
 /*--------------------------------------------------*/
@@ -239,9 +215,9 @@ printf("Test #%d:\n", ++testno);
 /* 9  Test copying the null string (zero length string)
  * into another existing string, and overwriting
  * it's contents                                    */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
-    wmemcpy_s(str1, LEN, L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 41);
+    wmemcpy_s(str1, LEN, L"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 40);
     str2[0] = L'\0';
 
     rc = wcscpy_s(str1, LEN/2, str2);
@@ -269,8 +245,8 @@ printf("Test #%d:\n", ++testno);
 /* 10  Test for copying string over NULL string */
     printf("Test #%d:\n", ++testno);
 
-	wmemcpy_s(str1, LEN, L"keep it simple--keep it simple--keep it simple", 47);
-	sz = wcsnlen_s(str1, LEN);
+    wmemcpy_s(str1, LEN, L"keep it simple--keep it simple--keep it simple", 47);
+    sz = wcsnlen_s(str1, LEN);
     memset_s(str2, '\0', 30);
 
     rc = wcscpy_s(str2, LEN, str1);
@@ -291,8 +267,8 @@ printf("Test #%d:\n", ++testno);
     printf("Test #%d:\n", ++testno);
 
     memset_s(str1, '\0', 50);
-	wmemcpy_s(str2, LEN, L"keep it simple--keep it simple--keep it simple", 47);
-	sz = wcsnlen_s(str2, LEN);
+    wmemcpy_s(str2, LEN, L"keep it simple--keep it simple--keep it simple", 47);
+    sz = wcsnlen_s(str2, LEN);
 
     rc = wcscpy_s(str1, LEN, str2);
     if (rc != EOK) {
@@ -311,8 +287,8 @@ printf("Test #%d:\n", ++testno);
     printf("Test #%d:\n", ++testno);
 
     wmemset_s(str1, L'x', 20);
-	wmemcpy_s(str2, LEN, L"keep it simple", 15);
-	sz_orig = wcsnlen_s(str2, LEN);
+    wmemcpy_s(str2, LEN, L"keep it simple", 15);
+    sz_orig = wcsnlen_s(str2, LEN);
 
     rc = wcscpy_s(str1, LEN, str2);
     if (rc != EOK) {
@@ -334,11 +310,11 @@ printf("Test #%d:\n", ++testno);
 
 /*--------------------------------------------------*/
 /* 13 Test for not enough space in destination  (dest < src)  */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
 
     wmemset_s(str1, L'x', 20);
-	wmemcpy_s(str2, LEN, L"keep it simple", 15);
+    wmemcpy_s(str2, LEN, L"keep it simple", 15);
 
     rc = wcscpy_s(str1, 14, str2);
     if (rc != ESNOSPC) {
@@ -356,7 +332,7 @@ printf("Test #%d:\n", ++testno);
     printf("Test #%d:\n", ++testno);
 
     wmemset_s(str1, L'x', 20);
-	wmemcpy_s(str2, LEN, L"keep it simple", 15);
+    wmemcpy_s(str2, LEN, L"keep it simple", 15);
 
     rc = wcscpy_s(str2, 6, str1);
     if (rc != ESNOSPC) {
@@ -375,7 +351,7 @@ printf("Test #%d:\n", ++testno);
 
 
     wmemcpy_s(str1, LEN, L"it", 3);
-	wmemcpy_s(str2, LEN, L"qqweqeqeqeq", 12);
+    wmemcpy_s(str2, LEN, L"qqweqeqeqeq", 12);
 
     rc = wcscpy_s(str2, 3, str1);
     if (rc != EOK) {
@@ -393,9 +369,9 @@ printf("Test #%d:\n", ++testno);
 /* 16 Test copy short string over long string          */
     printf("Test #%d:\n", ++testno);
 
-	wmemcpy_s(str1, LEN, L"qq12345weqeqeqeq", 17);
+    wmemcpy_s(str1, LEN, L"qq12345weqeqeqeq", 17);
     wmemcpy_s(str2, LEN, L"it", 3);
-	sz_orig = wcsnlen_s(str2, LEN);
+    sz_orig = wcsnlen_s(str2, LEN);
 
 
     rc = wcscpy_s(str1, 10, str2);
@@ -413,18 +389,18 @@ printf("Test #%d:\n", ++testno);
 
 /*--------------------------------------------------*/
 /* 17 Test for not enough space in destination for final NULL */
-	printf("Test #%d:\n", ++testno);
+    printf("Test #%d:\n", ++testno);
 
     wmemcpy_s(str1, LEN, L"it", 3);
-	wmemcpy_s(str2, LEN, L"qqweqeqeqeq", 12);
+    wmemcpy_s(str2, LEN, L"qqweqeqeqeq", 12);
 
-	sz = wcsnlen_s(str2, LEN);
+    sz = wcsnlen_s(str2, LEN);
 
-	rc = wcscpy_s(str2, 2, str1);
-	if (rc != ESNOSPC) {
-		printf("%s %u   Error rc=%u \n",
-					 __FUNCTION__, __LINE__,  rc );
-	}
+    rc = wcscpy_s(str2, 2, str1);
+    if (rc != ESNOSPC) {
+        printf("%s %u   Error rc=%u \n",
+                     __FUNCTION__, __LINE__,  rc );
+    }
 
     if (*str2 != L'\0') {
         printf("%s %u -%ls-  Error rc=%u \n",
