@@ -104,7 +104,7 @@ cc_library_shared {
     ],
     vendor: true,
     include_dirs: [
-        "hardware/intel/external/safestringlib/include",
+        "external/safestringlib/include",
     ],
 	export_include_dirs: [
 		"include",
@@ -120,7 +120,7 @@ cc_library_static {
     ],
 	vendor_available: true,
     include_dirs: [
-        "hardware/intel/external/safestringlib/include",
+        "external/safestringlib/include",
     ],
 	export_include_dirs: [
 		"include",
